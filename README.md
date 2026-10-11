@@ -1,52 +1,48 @@
-﻿# UndoProof
+# UndoProof
 
-**Policy first. Execute only within scope. Verify the resulting state.**
+**Policy-gated automated actions with verification and snapshot-based recovery.**
 
-UndoProof is a prototype demonstrating policy-gated automated actions, scoped execution, verification of database changes, and snapshot-based recovery.
+## About
+
+UndoProof is a local prototype that demonstrates how automated actions can be checked against policy, executed within a defined scope, verified after execution, and recovered using a saved snapshot.
 
 ## Demo scenarios
 
-- **ALLOW:** Update a permitted customer record and verify the change.
-- **BLOCK:** Reject an oversized request before it modifies records.
-- **RECOVER:** Restore a saved SQLite demo snapshot and verify the final state.
+- **ALLOW:** Execute a permitted action and verify the resulting record.
+- **BLOCK:** Reject a prohibited action before it changes records.
+- **RECOVER:** Restore a record to its saved snapshot and verify the final state.
 
-## Technology
+The demo uses synthetic customer records and a local SQLite database.
+
+## Tech stack
 
 - Python
 - FastAPI
 - SQLite
 - Pytest
 
-## Run locally
+## Run locally on Windows
 
-Install Python, then open PowerShell in the project directory.
-
-Create a virtual environment:
+Open PowerShell in the project folder:
 
 ```powershell
-python -m venv .venv
-```
-
-Install dependencies:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-Start the application:
-
-```powershell
+cd C:\Users\acer\UndoProof
 .\.venv\Scripts\python.exe -m uvicorn app:app --reload
 ```
 
-Open http://127.0.0.1:8000 in your browser.
+Open the dashboard at http://127.0.0.1:8000.
 
-Run the tests in another PowerShell window:
+Open the audit view at http://127.0.0.1:8000/audit.
+
+## Run tests
+
+In a separate PowerShell window:
 
 ```powershell
+cd C:\Users\acer\UndoProof
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-## Prototype limitations
+## Current limitations
 
-This is a local demonstration using synthetic data and SQLite. Recovery applies to the demo database snapshot; it is not a universal rollback mechanism for external systems. The current prototype does not claim integration with production AI agents or external business systems.
+This is a local proof of concept using synthetic data. Recovery is snapshot-based for the demo database; it is not a universal rollback mechanism. The prototype is not yet integrated with a live AI agent or external business systems. Its policy decisions are deterministic and should not be described as a trained AI model.
